@@ -11,6 +11,7 @@ from flask_login import (
     login_user,
     logout_user,
 )
+from flask_talisman import Talisman
 from oauthlib.oauth2 import WebApplicationClient
 import requests
 
@@ -25,6 +26,7 @@ GOOGLE_DISCOVERY_URL = ("https://accounts.google.com/.well-known/openid-configur
 
 # Flask app setup
 app = Flask(__name__)
+Talisman(app)
 app.secret_key = os.environ.get("SECRET_KEY") or os.urandom(24)
 
 # User session management setup
