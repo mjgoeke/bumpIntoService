@@ -9,7 +9,7 @@ FLASK_PORT=5000
 
 sudo apt update && sudo apt upgrade -y
 
-sudo apt install -y nginx certbot python3-certbot-nginx docker.io docker-compose docker-buildx
+DEBIAN_FRONTEND=noninteractive sudo apt install -y nginx certbot python3-certbot-nginx docker.io docker-compose docker-buildx
 
 echo "Building and starting Flask app with Docker Compose..."
 docker-compose up --build -d

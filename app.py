@@ -4,13 +4,7 @@ import os
 
 # Third-party libraries
 from flask import Flask, redirect, request, url_for
-from flask_login import (
-    LoginManager,
-    current_user,
-    login_required,
-    login_user,
-    logout_user,
-)
+
 from flask_talisman import Talisman
 from oauthlib.oauth2 import WebApplicationClient
 import requests
@@ -29,19 +23,8 @@ app = Flask(__name__)
 Talisman(app)
 app.secret_key = os.environ.get("SECRET_KEY") or os.urandom(24)
 
-# User session management setup
-# https://flask-login.readthedocs.io/en/latest
-login_manager = LoginManager()
-login_manager.init_app(app)
-
 # OAuth 2 client setup
 client = WebApplicationClient(GOOGLE_CLIENT_ID)
-
-# Flask-Login helper to retrieve a user from our db
-@login_manager.user_loader
-def load_user(user_id):
-    return User.get(user_id)
-
 
 @app.route("/")
 def index():
@@ -55,7 +38,7 @@ def index():
             )
         )
     else:
-        return '<a class="button" href="/login">Google Login</a>'
+        return 'Please log in via the client app'
 
 
 def get_google_provider_cfg():
@@ -142,20 +125,5 @@ def callback():
     return redirect(url_for("index"))
 
 
-@app.route("/logout")
-@login_required
-def logout():
-    logout_user()
-    return redirect(url_for("index"))
-
 if __name__ == "__main__":
     app.run(ssl_context="adhoc")
-
-
-# import h3
-
-
-
-# lat, lng = 37.769377, -122.388903
-# resolution = 9
-# h3.latlng_to_cell(lat, lng, resolution)
