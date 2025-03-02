@@ -32,7 +32,7 @@ RUN adduser \
 
 # pip install gunicorn (used as entry point)
 RUN --mount=type=cache,target=/root/.cache/pip \
-python -m pip install gunicorn
+    python -m pip install gunicorn
 
 # Copy requirements.txt into layer
 COPY ./requirements.txt ./
