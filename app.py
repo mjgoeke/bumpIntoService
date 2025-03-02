@@ -40,6 +40,10 @@ async def verify_token(token: str):
 
     return claims
 
+@app.get('/')
+async def index():
+    return {"message": "Hello World"}
+
 @app.get('/protected')
 async def protected_route(user=Depends(get_current_user)):
     return {"message": "This is a protected route", "user": user}
